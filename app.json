@@ -32,12 +32,16 @@
       },
       "class": "sensor",
       "capabilities": [
-        "measure_temperature"
+        "target_temperature",
+        "measure_temperature",
+        "watts_vision_modes"
       ],
       "platforms": [
         "local"
       ],
-      "connectivity": [],
+      "connectivity": [
+        "cloud"
+      ],
       "images": {
         "small": "/drivers/watts-vision/assets/images/small.png",
         "large": "/drivers/watts-vision/assets/images/large.png",
@@ -80,5 +84,57 @@
       ],
       "id": "watts-vision"
     }
-  ]
+  ],
+  "capabilities": {
+    "watts_vision_modes": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "COMFORT"
+          }
+        },
+        {
+          "id": "999",
+          "title": {
+            "en": "PROGRAM"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "ECO"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "BOOST"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "ANTI FREEZE"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "OFF"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
+    }
+  }
 }

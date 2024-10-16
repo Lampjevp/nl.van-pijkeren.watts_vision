@@ -4,12 +4,16 @@
   },
   "class": "sensor",
   "capabilities": [
-    "measure_temperature"
+    "target_temperature",
+    "measure_temperature",
+    "watts_vision_modes"
   ],
   "platforms": [
     "local"
   ],
-  "connectivity": [],
+  "connectivity": [
+    "cloud"
+  ],
   "images": {
     "small": "{{driverAssetsPath}}/images/small.png",
     "large": "{{driverAssetsPath}}/images/large.png",
@@ -24,16 +28,26 @@
         "title": {
           "en": "Your custom title"
         },
-        "usernameLabel": { "en": "E-mail address" },
-        "usernamePlaceholder": { "en": "john@doe.com" },
-        "passwordLabel": { "en": "Password" },
-        "passwordPlaceholder": { "en": "Password" }
+        "usernameLabel": {
+          "en": "E-mail address"
+        },
+        "usernamePlaceholder": {
+          "en": "john@doe.com"
+        },
+        "passwordLabel": {
+          "en": "Password"
+        },
+        "passwordPlaceholder": {
+          "en": "Password"
+        }
       }
     },
     {
       "id": "list_devices",
       "template": "list_devices",
-      "navigation": { "next": "add_devices" }
+      "navigation": {
+        "next": "add_devices"
+      }
     },
     {
       "id": "add_devices",
