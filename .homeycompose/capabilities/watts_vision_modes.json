@@ -14,12 +14,6 @@
         }
       },
       {
-        "id": "999",
-        "title": {
-          "en": "PROGRAM"
-        }
-      },
-      {
         "id": "3",
         "title": {
           "en": "ECO"
@@ -63,12 +57,6 @@
                   "id": "0",
                   "title": {
                     "en": "COMFORT"
-                  }
-                },
-                {
-                  "id": "999",
-                  "title": {
-                    "en": "PROGRAM"
                   }
                 },
                 {
@@ -118,12 +106,6 @@
                   }
                 },
                 {
-                  "id": "999",
-                  "title": {
-                    "en": "PROGRAM"
-                  }
-                },
-                {
                   "id": "3",
                   "title": {
                     "en": "ECO"
@@ -167,12 +149,6 @@
                   "id": "0",
                   "title": {
                     "en": "COMFORT"
-                  }
-                },
-                {
-                  "id": "999",
-                  "title": {
-                    "en": "PROGRAM"
                   }
                 },
                 {

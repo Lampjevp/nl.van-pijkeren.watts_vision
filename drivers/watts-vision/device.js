@@ -21,7 +21,7 @@ class MyDevice extends Device {
     await this.getAPI();
     await this.getMode();
     await this.getTemp();
-    
+
     // Listen for target_temperature change
     this.registerCapabilityListener('target_temperature', async (value) => { 
       this.log(value);
@@ -29,7 +29,7 @@ class MyDevice extends Device {
       this.log(newValue);
       mode = _response_api_data.gv_mode;
       let deviceID = this.getStoreValue('id');
-      
+    
       const headers = { Authorization: `Bearer ${token}` };
       const payload = new URLSearchParams({ 
         'token': 'true',
@@ -42,42 +42,23 @@ class MyDevice extends Device {
         'lang': 'nl_NL',
         'query[consigne_eco]': newValue,
         'query[consigne_manuel]': newValue,
-      });     
-      
-      this.log(payload);
+      });
       await axios.post('https://smarthome.wattselectronics.com/api/v0.1/human/query/push/', payload , { headers: headers });
-      this.log("Joe");
       await this.getTemp();
-      this.log("JoeJoe");
-      
     });
 
 
     // Listen for watts_vision_modes change
     this.registerCapabilityListener('watts_vision_modes', async (mode) => {
-      if (menuMode != 999) {
-        let deviceID = this.getStoreValue('id');
-        const headers = { Authorization: `Bearer ${token}` };
-        const payload = new URLSearchParams({ 
-          'token': 'true',
-          'context': '1',
-          'smarthome_id': smarthomes,
-          'query[id_device]': deviceID,
-          'query[gv_mode]': mode,
-          'query[nv_mode]': mode,
-          'peremption': '15000',
-          'lang': 'nl_NL',
-        });
-        await axios.post('https://smarthome.wattselectronics.com/api/v0.1/human/query/push/', payload , { headers: headers });
-        
-        await this.getTemp();
-
-
-      }else {
-        this.log('Program is not supported yet');
-      }
+      await this.setMode(mode);
     });
-    this.log('MyDevice has been initialized: ' + this.getStoreValue('id') );
+    // Listen for flow change mode
+    const cardActionSetMode = this.homey.flow.getActionCard('set-mode');
+    cardActionSetMode.registerRunListener(async (args) =>{
+      await this.setMode(args.mode);
+    })
+
+    this.log('Thermostat has been initialized: ' + this.getStoreValue('id'));
 
     this.updateInterval = this.homey.setInterval(
       this.loop.bind(this),
@@ -181,12 +162,36 @@ class MyDevice extends Device {
     }
   }
 
+  async setMode(mode) {
+    if (menuMode != 999) {
+      let deviceID = this.getStoreValue('id');
+      const headers = { Authorization: `Bearer ${token}` };
+      const payload = new URLSearchParams({ 
+        'token': 'true',
+        'context': '1',
+        'smarthome_id': smarthomes,
+        'query[id_device]': deviceID,
+        'query[gv_mode]': mode,
+        'query[nv_mode]': mode,
+        'peremption': '15000',
+        'lang': 'nl_NL',
+      });
+      await axios.post('https://smarthome.wattselectronics.com/api/v0.1/human/query/push/', payload , { headers: headers });
+      
+      await this.getTemp();
+
+
+    }else {
+      this.log('Program is not supported yet');
+    }
+  }
+
   async getAPI(){
     const password = this.getStoreValue('password');
     const username = this.getStoreValue('username');
 
     const payload = {grant_type: 'password', username: username, password: password, client_id: 'app-front'};
-    let _response_token = await axios.post('https://smarthome.wattselectronics.com/auth/realms/watts/protocol/openid-connect/token', new URLSearchParams(payload));
+    let _response_token = await axios.post('https://auth.smarthome.wattselectronics.com/realms/watts/protocol/openid-connect/token', new URLSearchParams(payload));
 
     token = _response_token.data.access_token;
 

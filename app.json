@@ -25,6 +25,62 @@
   "author": {
     "name": "Wicher"
   },
+  "flow": {
+    "actions": [
+      {
+        "id": "set-mode",
+        "title": {
+          "en": "Set mode"
+        },
+        "hint": {
+          "en": "Set the mode of the thermostat"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watts-vision"
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Comfort"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "ECO"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "Boost"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "AntiFreeze"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "OFF"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {
@@ -36,25 +92,23 @@
         "measure_temperature",
         "watts_vision_modes"
       ],
+      "flows": [
+        "set-mode"
+      ],
       "platforms": [
         "local"
       ],
       "connectivity": [
         "cloud"
       ],
-      "images": {
-        "small": "/drivers/watts-vision/assets/images/small.png",
-        "large": "/drivers/watts-vision/assets/images/large.png",
-        "xlarge": "/drivers/watts-vision/assets/images/xlarge.png"
-      },
       "pair": [
         {
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "logo.png",
+            "logo": "log.png",
             "title": {
-              "en": "Your custom title"
+              "en": "Enter your Watts Vision credentials."
             },
             "usernameLabel": {
               "en": "E-mail address"
@@ -99,12 +153,6 @@
           "id": "0",
           "title": {
             "en": "COMFORT"
-          }
-        },
-        {
-          "id": "999",
-          "title": {
-            "en": "PROGRAM"
           }
         },
         {

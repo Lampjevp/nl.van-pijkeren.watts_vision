@@ -1,0 +1,51 @@
+{
+  "actions": [
+    {
+      "id": "set-mode",
+      "title": {
+        "en": "Set mode"
+      },
+      "hint": {
+        "en": "Set the mode of the thermostat"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "mode",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Comfort"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "ECO"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "Boost"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "AntiFreeze"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "OFF"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
