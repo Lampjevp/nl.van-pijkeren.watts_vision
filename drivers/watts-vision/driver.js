@@ -15,23 +15,27 @@ let zone_label;
 
 class Driver extends Homey.Driver {
   async onPair(session) {
+    this.log('test1');
     let username = '';
     let password = '';
 
     session.setHandler('login', async (data) => {
-
+      this.log('test2');
       let credentialsAreValid = false;
       username = data.username;
       password = data.password;
-
+      this.log('test3');
       const payload = {
         grant_type: 'password',
         username: username,
         password: password,
         client_id: 'app-front',
       };
+      this.log('test4');
       response_token = await axios.post('https://smarthome.wattselectronics.com/auth/realms/watts/protocol/openid-connect/token', new URLSearchParams(payload));
+      this.log('test5');
       token = response_token.data.access_token;
+      this.log('test6');
       if (response_token.status == '200') {
         credentialsAreValid = true;
       }

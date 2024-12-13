@@ -1,3 +1,3 @@
 # Watts Vision
 
-Adds support for MyBrand devices.
+Adds support for Watts Vision devices.
