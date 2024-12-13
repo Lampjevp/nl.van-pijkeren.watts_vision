@@ -32,7 +32,7 @@ class Driver extends Homey.Driver {
         client_id: 'app-front',
       };
       this.log('test4');
-      response_token = await axios.post('https://smarthome.wattselectronics.com/auth/realms/watts/protocol/openid-connect/token', new URLSearchParams(payload));
+      response_token = await axios.post('https://auth.smarthome.wattselectronics.com/realms/watts/protocol/openid-connect/token', new URLSearchParams(payload));
       this.log('test5');
       token = response_token.data.access_token;
       this.log('test6');
