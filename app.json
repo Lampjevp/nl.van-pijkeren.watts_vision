@@ -26,14 +26,26 @@
     "name": "Wicher"
   },
   "flow": {
-    "actions": [
+    "triggers": [
       {
-        "id": "set-mode",
+        "id": "thermostat_mode_changed",
         "title": {
-          "en": "Set mode"
+          "en": "Thermostat mode has changed"
         },
-        "hint": {
-          "en": "Set the mode of the thermostat"
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watts-vision"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "thermostat_mode_is",
+        "title": {
+          "en": "Thermostat mode !{{is|is not}}"
         },
         "args": [
           {
@@ -42,36 +54,93 @@
             "filter": "driver_id=watts-vision"
           },
           {
+            "name": "thermostat_mode",
             "type": "dropdown",
-            "name": "mode",
             "values": [
               {
                 "id": "0",
-                "label": {
-                  "en": "Comfort"
+                "title": {
+                  "en": "COMFORT"
+                }
+              },
+              {
+                "id": "999",
+                "title": {
+                  "en": "PROGRAM"
                 }
               },
               {
                 "id": "3",
-                "label": {
+                "title": {
                   "en": "ECO"
                 }
               },
               {
                 "id": "4",
-                "label": {
-                  "en": "Boost"
+                "title": {
+                  "en": "BOOST"
                 }
               },
               {
                 "id": "2",
-                "label": {
-                  "en": "AntiFreeze"
+                "title": {
+                  "en": "ANTI FREEZE"
                 }
               },
               {
                 "id": "1",
-                "label": {
+                "title": {
+                  "en": "OFF"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "thermostat_mode_set",
+        "title": {
+          "en": "Set the mode"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=watts-vision"
+          },
+          {
+            "name": "thermostat_mode",
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "COMFORT"
+                }
+              },
+              {
+                "id": "3",
+                "title": {
+                  "en": "ECO"
+                }
+              },
+              {
+                "id": "4",
+                "title": {
+                  "en": "BOOST"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "ANTI FREEZE"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
                   "en": "OFF"
                 }
               }
@@ -91,9 +160,6 @@
         "target_temperature",
         "measure_temperature",
         "watts_vision_modes"
-      ],
-      "flows": [
-        "set-mode"
       ],
       "platforms": [
         "local"
@@ -153,6 +219,12 @@
           "id": "0",
           "title": {
             "en": "COMFORT"
+          }
+        },
+        {
+          "id": "999",
+          "title": {
+            "en": "PROGRAM"
           }
         },
         {

@@ -8,9 +8,6 @@
     "measure_temperature",
     "watts_vision_modes"
   ],
-  "flows": [
-    "set-mode"
-  ],
   "platforms": [
     "local"
   ],

@@ -14,6 +14,12 @@
         }
       },
       {
+        "id": "999",
+        "title": {
+          "en": "PROGRAM"
+        }
+      },
+      {
         "id": "3",
         "title": {
           "en": "ECO"
@@ -40,145 +46,5 @@
     ],
     "getable": true,
     "setable": true,
-    "uiComponent": "picker",
-    "$flow": {
-      "triggers": [
-        {
-          "id": "thermostat_mode_changed",
-          "title": {
-            "en": "Thermostat mode has changed"
-          },
-          "args": [
-            {
-              "name": "thermostat_mode",
-              "type": "dropdown",
-              "values": [
-                {
-                  "id": "0",
-                  "title": {
-                    "en": "COMFORT"
-                  }
-                },
-                {
-                  "id": "3",
-                  "title": {
-                    "en": "ECO"
-                  }
-                },
-                {
-                  "id": "4",
-                  "title": {
-                    "en": "BOOST"
-                  }
-                },
-                {
-                  "id": "2",
-                  "title": {
-                    "en": "ANTI FREEZE"
-                  }
-                },
-                {
-                  "id": "1",
-                  "title": {
-                    "en": "OFF"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "conditions": [
-        {
-          "id": "thermostat_mode_is",
-          "title": {
-            "en": "Thermostat mode !{{is|is not}}"
-          },
-          "args": [
-            {
-              "name": "thermostat_mode",
-              "type": "dropdown",
-              "values": [
-                {
-                  "id": "0",
-                  "title": {
-                    "en": "COMFORT"
-                  }
-                },
-                {
-                  "id": "3",
-                  "title": {
-                    "en": "ECO"
-                  }
-                },
-                {
-                  "id": "4",
-                  "title": {
-                    "en": "BOOST"
-                  }
-                },
-                {
-                  "id": "2",
-                  "title": {
-                    "en": "ANTI FREEZE"
-                  }
-                },
-                {
-                  "id": "1",
-                  "title": {
-                    "en": "OFF"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "actions": [
-        {
-          "id": "thermostat_mode_set",
-          "title": {
-            "en": "Set the mode"
-          },
-          "args": [
-            {
-              "name": "thermostat_mode",
-              "type": "dropdown",
-              "values": [
-                {
-                  "id": "0",
-                  "title": {
-                    "en": "COMFORT"
-                  }
-                },
-                {
-                  "id": "3",
-                  "title": {
-                    "en": "ECO"
-                }
-                },
-                {
-                  "id": "4",
-                  "title": {
-                    "en": "BOOST"
-                  }
-                },
-                {
-                  "id": "2",
-                  "title": {
-                    "en": "ANTI FREEZE"
-                  }
-                },
-                {
-                  "id": "1",
-                  "title": {
-                    "en": "OFF"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  }
+    "uiComponent": "picker"
+}

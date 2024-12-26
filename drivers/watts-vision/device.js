@@ -14,22 +14,27 @@ let _response_api_data;
 
 class MyDevice extends Device {
 
+  async loop() {
+    await this.getAPI();
+    await this.getMode();
+    await this.getTemp();
+  }
+
   /**
    * onInit is called when the device is initialized.
    */
   async onInit() {
+    let deviceID = this.getData().id;
+    this.log('onInit: ' + deviceID);
     await this.getAPI();
     await this.getMode();
     await this.getTemp();
 
     // Listen for target_temperature change
     this.registerCapabilityListener('target_temperature', async (value) => { 
-      this.log(value);
       let newValue = (10 * ((value * (9/5)) + 32))
-      this.log(newValue);
       mode = _response_api_data.gv_mode;
-      let deviceID = this.getStoreValue('id');
-    
+      this.log('Set temp: ' + deviceID);
       const headers = { Authorization: `Bearer ${token}` };
       const payload = new URLSearchParams({ 
         'token': 'true',
@@ -44,33 +49,32 @@ class MyDevice extends Device {
         'query[consigne_manuel]': newValue,
       });
       await axios.post('https://smarthome.wattselectronics.com/api/v0.1/human/query/push/', payload , { headers: headers });
-      await this.getTemp();
+      //await this.getTemp();
     });
-
-
     // Listen for watts_vision_modes change
     this.registerCapabilityListener('watts_vision_modes', async (mode) => {
-      await this.setMode(mode);
+      this.log("1: " + deviceID);
+      this.setMode(mode, deviceID);
     });
     // Listen for flow change mode
-    const cardActionSetMode = this.homey.flow.getActionCard('set-mode');
-    cardActionSetMode.registerRunListener(async (args) =>{
-      await this.setMode(args.mode);
+    this.homey.flow.getActionCard('thermostat_mode_set').registerRunListener(async (args) =>{
+      this.log("2: " + deviceID);
+      this.setMode(args.thermostat_mode, deviceID);
     })
-
-    this.log('Thermostat has been initialized: ' + this.getStoreValue('id'));
 
     this.updateInterval = this.homey.setInterval(
       this.loop.bind(this),
       10000
     );
+
+    this.log('Thermostat has been initialized: ' + deviceID);
   }
 
   /**
    * onAdded is called when the user adds the device, called just after pairing.
    */
   async onAdded() {
-    this.log('MyDevice has been added: ' + this.getStoreValue('id') );
+    this.log('MyDevice has been added: ' + deviceID);
   }
 
   /**
@@ -98,13 +102,7 @@ class MyDevice extends Device {
    * onDeleted is called when the user deleted the device.
    */
   async onDeleted() {
-    this.log('MyDevice has been deleted: ' + this.getStoreValue('id') );
-  }
-
-  async loop() {
-    await this.getAPI();
-    await this.getMode();
-    await this.getTemp();
+    this.log('MyDevice has been deleted: ' + deviceID);
   }
 
   async getTemp() {
@@ -162,20 +160,31 @@ class MyDevice extends Device {
     }
   }
 
-  async setMode(mode) {
+  async setMode(mode, devID) {
+    this.log(this.getStoreValue('deviceNum'));
+    this.log(this.getData().id);
+    this.log('setMode1: ' + devID);
+    if ( mode == '8' || mode == '11') {
+      menuMode = '999'
+      this.setCapabilityValue('watts_vision_modes', menuMode);
+    } else {
+      menuMode = mode
+      this.setCapabilityValue('watts_vision_modes', menuMode);
+    }
+    
     if (menuMode != 999) {
-      let deviceID = this.getStoreValue('id');
       const headers = { Authorization: `Bearer ${token}` };
       const payload = new URLSearchParams({ 
         'token': 'true',
         'context': '1',
         'smarthome_id': smarthomes,
-        'query[id_device]': deviceID,
+        'query[id_device]': devID,
         'query[gv_mode]': mode,
         'query[nv_mode]': mode,
         'peremption': '15000',
         'lang': 'nl_NL',
       });
+      this.log('setMode2: ' + devID);
       await axios.post('https://smarthome.wattselectronics.com/api/v0.1/human/query/push/', payload , { headers: headers });
       
       await this.getTemp();
